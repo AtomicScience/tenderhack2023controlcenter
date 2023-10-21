@@ -1,7 +1,7 @@
 import { AppShell, Burger, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Navbar } from './components/Navbar';
-import { Incidents } from './components/Incidents';
+import { ErrorKindPage } from './components/ErrorKindPage';
 
 function App() {
   const [opened, { toggle }] = useDisclosure();
@@ -26,7 +26,7 @@ function App() {
       </AppShell.Navbar>
 
       <AppShell.Main bg="pale-blue.1">
-        <Incidents />
+        <ErrorKindPage/>
       </AppShell.Main>
     </AppShell>
   );
