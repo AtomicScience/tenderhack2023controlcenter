@@ -3,10 +3,10 @@ import { IconVersions } from '@tabler/icons-react';
 
 export const IncidentCard = () => {
   return (
-    <Card bg="white">
+    <Card bg="white" className='!flex-grow'>
       <Stack gap="sm">
         <Group justify="space-between">
-          <Text  size="sm">
+          <Text size="sm">
             Тип ошибки:{" "}
             <Text span fw={500}>
               Системная

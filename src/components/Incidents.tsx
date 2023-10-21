@@ -1,4 +1,4 @@
-import { Stack, Title } from '@mantine/core';
+import { Flex, Stack, Title } from '@mantine/core';
 import { IncidentCard } from './IncidentCard';
 
 export const Incidents = () => {
@@ -7,8 +7,10 @@ export const Incidents = () => {
       <Title order={1} size="xl" fw={700}>
         Список ошибок
       </Title>
-      <IncidentCard />
-      <IncidentCard />
+      <Flex gap="sm" wrap='wrap'>
+        <IncidentCard />
+        <IncidentCard />
+      </Flex>
     </Stack>
   );
 }

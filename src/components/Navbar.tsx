@@ -5,7 +5,7 @@ export const Navbar = () => {
   return (
     <>
       <NavLink
-        label="Дашборд и аналитика"
+        label="Aналитика"
         leftSection={
           <ThemeIcon variant="light" size="md" color="blue">
             <IconGraph style={{ width: "80%", height: "80%" }} />
