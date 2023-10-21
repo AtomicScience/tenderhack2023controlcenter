@@ -1,35 +1,18 @@
-import { AppShell, Burger, Group } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { Navbar } from './components/Navbar';
-import { Incidents } from './components/Incidents';
+import { Route, Routes } from "react-router-dom"
+import { IncidentsPage } from "./components/IncidentsPage"
+import { Frame } from "./components/Frame"
+import { DasboardPage } from "./components/DashboardPage"
 
 function App() {
-  const [opened, { toggle }] = useDisclosure();
-
   return (
-    <AppShell
-      header={{ height: 60 }}
-      navbar={{ width: 200, breakpoint: "sm", collapsed: { mobile: !opened } }}
-      padding="md"
-    >
-      <AppShell.Header p="sm">
-        <Group>
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <div className="flex align-center">
-            <img src="pp_logo.svg" />
-          </div>
-        </Group>
-      </AppShell.Header>
-
-      <AppShell.Navbar>
-        <Navbar />
-      </AppShell.Navbar>
-
-      <AppShell.Main bg="pale-blue.1">
-        <Incidents />
-      </AppShell.Main>
-    </AppShell>
-  );
+    <Routes>
+      <Route path="/" element={<Frame />}>
+        <Route path="/" element={<DasboardPage />} />
+        <Route path="errors" element={<IncidentsPage />} />
+      </Route>
+      <Route path="*" element={<p>404</p>} />
+    </Routes>     
+  )
 }
 
 export default App

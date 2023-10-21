@@ -1,7 +1,28 @@
 import { Anchor, Badge, Card, CardSection, Center, Group, Space, Stack, Text } from '@mantine/core'
 import { IconVersions } from '@tabler/icons-react';
+import { FC } from 'react';
 
-export const IncidentCard = () => {
+interface IncidentsCardProps {
+  errorKind: string
+  errorType: string
+  status: string
+  overallCount: number
+  date: string
+  lastDayCount: number
+  threeDaysCount: number
+  oneMonthCount: number
+}
+
+export const IncidentCard: FC<IncidentsCardProps> = ({
+  errorKind,
+  errorType,
+  status,
+  overallCount,
+  date,
+  lastDayCount,
+  threeDaysCount,
+  oneMonthCount
+}) => {
   return (
     <Card bg="white" className='!flex-grow'>
       <Stack gap="sm">
@@ -9,33 +30,33 @@ export const IncidentCard = () => {
           <Text size="sm">
             Тип ошибки:{" "}
             <Text span fw={500}>
-              Системная
+              {errorType}
             </Text>
           </Text>
           <Badge variant="light" color="red">
-            Не разрешен
+            {status}
           </Badge>
         </Group>
         <Anchor size="lg" fw={600}>
-          Ошибка в форме создания характеристик
+          {errorKind}
         </Anchor>
         <Group justify="space-between">
           <Group gap="sm">
             <Text span fw={700} className="!text-4xl">
-              1024
+              {overallCount}
             </Text>
             <Text size="sm" fw={600}>
               Количество случаев
             </Text>
           </Group>
           <Text c="gray" size="sm" fw={600}>
-            21.11.2023
+            {date}
           </Text>
         </Group>
         <Group justify="space-between">
           <Group gap="xs">
             <Text span fw={700} size="xl" c='green'>
-              0
+              {lastDayCount}
             </Text>
             <Text size="xs" fw={600}>
               За последние сутки
@@ -43,7 +64,7 @@ export const IncidentCard = () => {
           </Group>
           <Group gap="xs">
             <Text span fw={700} size="xl">
-              12
+              {threeDaysCount}
             </Text>
             <Text size="xs" fw={600}>
               За 3 дня
@@ -51,7 +72,7 @@ export const IncidentCard = () => {
           </Group>
           <Group gap="xs">
             <Text span fw={700} size="xl">
-              506
+              {oneMonthCount}
             </Text>
             <Text size="xs" fw={600}>
               За месяц
