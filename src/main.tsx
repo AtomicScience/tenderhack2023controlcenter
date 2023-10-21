@@ -5,10 +5,12 @@ import './index.css'
 import { MantineProvider } from '@mantine/core';
 import { reatomContext } from '@reatom/npm-react';
 import { ctx } from './ctx.ts';
+import "@mantine/core/styles.css";
+import { MANTINE_THEME } from './mantineTheme.ts';
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <MantineProvider>
+    <MantineProvider theme={MANTINE_THEME}>
       <reatomContext.Provider value={ctx}>
         <App />
       </reatomContext.Provider>
