@@ -9,7 +9,13 @@ import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 import { MANTINE_THEME } from './mantineTheme.ts';
 import { BrowserRouter } from 'react-router-dom';
-import { Notifications } from '@mantine/notifications';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from "react-query";
+import { Notifications } from "@mantine/notifications";
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -17,7 +23,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <MantineProvider theme={MANTINE_THEME}>
         <Notifications />
         <reatomContext.Provider value={ctx}>
+          <QueryClientProvider client={queryClient}>
             <App />
+          </QueryClientProvider>
         </reatomContext.Provider>
       </MantineProvider>
     </BrowserRouter>

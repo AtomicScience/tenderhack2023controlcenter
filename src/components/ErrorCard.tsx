@@ -1,15 +1,12 @@
 import { Anchor, Badge, Card, Group, Stack, Text } from '@mantine/core'
 import { FC } from 'react';
-import { ErrorOccurenes, ErrorOccurenesProps } from './ErrorOccurenes';
+import { ErrorShortModel } from '../models/error';
+import { ErrorOccurenes } from './ErrorOccurenes';
 
-interface IncidentsCardProps {
-  errorKind: string
-  errorType: string
-  status: string
-  
-}
+export type ErrorCardProps = ErrorShortModel;
 
-export const IncidentCard: FC<IncidentsCardProps & ErrorOccurenesProps> = ({
+export const ErrorCard: FC<ErrorCardProps> = ({
+  errorId,
   errorKind,
   errorType,
   status,
@@ -29,7 +26,7 @@ export const IncidentCard: FC<IncidentsCardProps & ErrorOccurenesProps> = ({
             {status}
           </Badge>
         </Group>
-        <Anchor size="lg" fw={600}>
+        <Anchor size="lg" href={`errors/${errorId}`} fw={600}>
           {errorKind}
         </Anchor>
         <ErrorOccurenes {...errorOccurences} />
