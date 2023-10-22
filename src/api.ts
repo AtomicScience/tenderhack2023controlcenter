@@ -1,4 +1,4 @@
-import { ErrorsDTO } from './models/error';
+import { ErrorShortModel, ErrorShortModelSchema, ErrorsDTO } from './models/error';
 
 export const SERVER = "http://10.9.67.97:8000";
 
@@ -12,6 +12,12 @@ export const requestErrors = async (): Promise<ErrorsDTO> => {
   const result = request(SERVER + '/dashboard/errors');
 
   return await result as ErrorsDTO;
+}
+
+export const requestError = async(errorId: string): Promise<ErrorShortModel> => {
+  const result = request(SERVER + `/dashboard/errors/${errorId}`);
+
+  return ErrorShortModelSchema.parse(await result);
 }
 
 export const requestProdFall = async (params: { id: string, created_date: string, description: string }): Promise<unknown> => {

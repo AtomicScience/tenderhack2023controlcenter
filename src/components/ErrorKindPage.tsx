@@ -1,26 +1,35 @@
-import { Title, Paper, Flex, Stack, Textarea, Button, Group, Select, Anchor } from '@mantine/core';
+import { Title, Paper, Flex, Stack, Textarea, Button, Group, Select, Skeleton } from '@mantine/core';
 import { ErrorOccurenes } from './ErrorOccurenes';
 import { IconChevronLeft } from '@tabler/icons-react';
 import { FANCY_STATUS_NAMES, StatusBadge } from './StatusBadge';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ErrorInstancesTable } from './ErrorInstancesTable';
+import { useQuery } from 'react-query';
+import { requestError } from '../api';
+import { ERROR_STATUSES } from '../models/error';
 
 export const ErrorKindPage = () => {
+  const { errorId } = useParams();
+  const navigate = useNavigate();
+
+  const { isLoading, data: error } = useQuery(["errors", errorId], () => requestError(errorId ?? ""));
+  
   return (
     <Paper p="md">
       <Stack gap="md">
-        <Group align="flex-start" justify='space-between'>
-          <Anchor
-            component={Link}
+        <Group align="flex-start" justify="space-between">
+          <Button
             c="black"
             variant="transparent"
-            to="/errors"
-            underline="never"
+            onClick={() => navigate(-1)}
+            size="compact-md"
           >
             <IconChevronLeft size="1rem" className="inline" />
             Назад
-          </Anchor>
-          <StatusBadge status={"resolved"} />
+          </Button>
+          <Skeleton visible={isLoading} display="inline">
+            <StatusBadge status={error?.status ?? "resolved"} />
+          </Skeleton>
         </Group>
 
         <Flex
@@ -30,43 +39,57 @@ export const ErrorKindPage = () => {
           justify="space-between"
         >
           <Stack gap="sm" className="flex-shrink">
-            <Title order={1} fw={600} className="!text-2xl">
-              Ошибка в форме создания характеристик
-            </Title>
+            <Skeleton visible={isLoading}>
+              <Title order={1} fw={600} className="!text-2xl">
+                {error?.title ?? "MOCK DATA"}
+              </Title>
+            </Skeleton>
             <ErrorOccurenes
-              logs_count_total={1024}
-              date="11.12.2023"
-              logs_count_last_24h={12}
-              logs_count_last_3d={24}
-              logs_count_last_1mo={10}
+              isLoading={isLoading}
+              logs_count_total={error?.logs_count_total}
+              date={error?.date}
+              logs_count_last_24h={error?.logs_count_last_24h}
+              logs_count_last_3d={error?.logs_count_last_3d}
+              logs_count_last_1mo={error?.logs_count_last_1mo}
             />
           </Stack>
         </Flex>
 
-        <Select
-          label="Статус ошибки"
-          description="Укажите статус ошибки, который будет отображаться в карточке"
-          placeholder="Выбрать"
-          data={Object.values(FANCY_STATUS_NAMES)}
-          allowDeselect={false}
-        />
+        <Skeleton visible={isLoading}>
+          <Select
+            label="Статус ошибки"
+            description="Укажите статус ошибки, который будет отображаться в карточке"
+            placeholder="Выбрать"
+            data={ERROR_STATUSES.map((status) => ({
+              value: status,
+              label: FANCY_STATUS_NAMES[status],
+            }))}
+            defaultValue={error?.category}
+            allowDeselect={false}
+          />
+        </Skeleton>
+        {/* TODO: Select action */}
 
         <Stack gap="xs">
-          <Textarea
-            variant="filled"
-            label="Введите текст при появлении ошибки у пользователя"
-            description="Данный текст будет появляться при возникновении ошибки на стороне пользователя"
-            placeholder="Извините, что возникла ошибка. В ближайшее время все исправим и пришлем вам уведомление"
-            withAsterisk
-            autosize
-            minRows={3}
-          />
+          <Skeleton visible={isLoading}>
+            <Textarea
+              variant="filled"
+              label="Введите текст при появлении ошибки у пользователя"
+              description="Данный текст будет появляться при возникновении ошибки на стороне пользователя"
+              placeholder="Извините, что возникла ошибка. В ближайшее время все исправим и пришлем вам уведомление"
+              withAsterisk
+              autosize
+              minRows={3}
+            />
+          </Skeleton>
 
-          <Group gap="xs">
-            <Button radius="xs" color="main-blue.8">
-              Сохранить
-            </Button>
-          </Group>
+          <Skeleton visible={isLoading}>
+            <Group gap="xs">
+              <Button radius="xs" color="main-blue.8">
+                Сохранить
+              </Button>
+            </Group>
+          </Skeleton>
         </Stack>
 
         <Title order={2} fw={600} className="!text-lg">
@@ -74,36 +97,39 @@ export const ErrorKindPage = () => {
         </Title>
 
         <Stack gap="xs">
-          <Select
-            label="Категория пользователей"
-            placeholder="Выбрать"
-            data={[
-              "Все пользователи",
-              "Активные пользователи",
-              "Потенциально затронутые пользователи",
-              "Затронутые пользователи",
-            ]}
-            allowDeselect={false}
-          />
+          <Skeleton visible={isLoading}>
+            <Select
+              label="Категория пользователей"
+              placeholder="Выбрать"
+              data={[
+                "Все пользователи",
+                "Активные пользователи",
+                "Потенциально затронутые пользователи",
+                "Затронутые пользователи",
+              ]}
+              allowDeselect={false}
+            />
+          </Skeleton>
 
-          <Textarea
-            variant="filled"
-            label="Введите текст при появлении ошибки у пользователя"
-            description="Данный текст будет появляться при возникновении ошибки на стороне пользователя"
-            placeholder="Извините, что возникла ошибка. В ближайшее время все исправим и пришлем вам уведомление"
-            withAsterisk
-            autosize
-            minRows={3}
-          />
+          <Skeleton visible={isLoading}>
+            <Textarea
+              variant="filled"
+              label="Введите текст при появлении ошибки у пользователя"
+              description="Данный текст будет появляться при возникновении ошибки на стороне пользователя"
+              placeholder="Извините, что возникла ошибка. В ближайшее время все исправим и пришлем вам уведомление"
+              withAsterisk
+              autosize
+              minRows={3}
+            />
+          </Skeleton>
 
-          <Group gap="xs">
-            <Button radius="xs" color="main-blue.8">
-              Отправить сообщение
-            </Button>
-            <Button variant="light" color="black">
-              Сохранить черновик
-            </Button>
-          </Group>
+          <Skeleton visible={isLoading}>
+            <Group gap="xs">
+              <Button radius="xs" color="main-blue.8">
+                Отправить сообщение
+              </Button>
+            </Group>
+          </Skeleton>
 
           <Title order={2} fw={600} className="!text-lg">
             Таблица экземпляров ошибок
