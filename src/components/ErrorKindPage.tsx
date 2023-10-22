@@ -10,14 +10,30 @@ import { useState, useRef } from 'react'
 import { notifications } from '@mantine/notifications';
 import { requestError, requestErrorMessage, setErrorMessage, setErrorStatus, requestMailing } from '../api';
 
-const FANCY_GROUPES_NAMES = [
-  'Все пользователи', 
-  'Активные пользователи', 
-  'Потенциально затронутые пользователи', 
-  'Точно затронутые пользователи'
-]
+export enum MailingGroups {
+  ALL, ACTIVE, POTENTIAL, AFFECTED
+}
 
-const mailingList = ['blinov.egor2011@yandex.ru']
+const FANCY_GROUPES_NAMES = {
+  [MailingGroups.ALL]: 'Все пользователи', 
+  [MailingGroups.ACTIVE]: 'Активные пользователи', 
+  [MailingGroups.POTENTIAL]: 'Потенциально затронутые пользователи', 
+  [MailingGroups.AFFECTED]: 'Точно затронутые пользователи'
+}
+
+const mailingList = {
+  [MailingGroups.ALL]: [
+    'goncharkv@gmail.com',
+    'romka_s@inbox.ru',
+    'a.kostenko32@gmail.com',
+    'shnobel-@mail.ru'
+  ],
+  [MailingGroups.ACTIVE]: [
+    'blinov.egor2011@yandex.ru'
+  ],
+  [MailingGroups.POTENTIAL]: [],
+  [MailingGroups.AFFECTED]: []
+}
 const mailingTitle = 'Портал Поставщиков - Сбой разрешен'
 
 export const ErrorKindPage = () => {
@@ -25,13 +41,13 @@ export const ErrorKindPage = () => {
   const navigate = useNavigate();
   const messageRef = useRef<HTMLTextAreaElement>();
 
-  const [mailingForm, setMailingForm] = useState<{ chosenMailingUsers: string, mailingText: string }>({
+  const [mailingForm, setMailingForm] = useState<{ chosenMailingUsers: MailingGroups, mailingText: string }>({
     mailingText: "Ошибка с которой вы столкнулись исправлена",
-    chosenMailingUsers: FANCY_GROUPES_NAMES[0]
+    chosenMailingUsers: MailingGroups.ALL
   });
 
   const handleMailing = () => {
-    requestMailing({ error_uid: errorId || '', title: mailingTitle, recipients: mailingList, text: mailingForm.mailingText })
+    requestMailing({ error_uid: errorId || '', title: mailingTitle, recipients: mailingList[mailingForm.chosenMailingUsers], text: mailingForm.mailingText })
   }
   const { isLoading, data: error } = useQuery(
     ["errorKind", errorId], 
@@ -175,11 +191,11 @@ export const ErrorKindPage = () => {
             <Stack gap="xs">
               <Skeleton visible={isLoading}>
                 <Select
-                  value={mailingForm.chosenMailingUsers}
-                  onChange={(chosen) => setMailingForm({ ...mailingForm, chosenMailingUsers: chosen || FANCY_GROUPES_NAMES[0] })}
+                  value={FANCY_GROUPES_NAMES[mailingForm.chosenMailingUsers]}
+                  onChange={(chosen) => setMailingForm({ ...mailingForm, chosenMailingUsers: Object.values(FANCY_GROUPES_NAMES).findIndex((element) => element === chosen) || MailingGroups.ACTIVE })}
                   label="Категория пользователей"
                   placeholder="Выбрать"
-                  data={FANCY_GROUPES_NAMES}
+                  data={Object.values(FANCY_GROUPES_NAMES)}
                   allowDeselect={false}
                 />
               </Skeleton>

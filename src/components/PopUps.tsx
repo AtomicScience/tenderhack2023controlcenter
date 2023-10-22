@@ -16,7 +16,7 @@ export const PopUps = () => {
   // }, [])
 
   const { refetch } = useQuery("servicePush", () => requestProdFall({
-    id: 'test', created_date: new Date().toJSON(), description: 'Something went wrong'
+    id: 'test', created_date: new Date().toJSON(), description: 'Данные не могут быть проимпортированы по причине: Ранее была импортирована более поздняя версия сущности. PackageGuid : 37872419, PackageDateTime : 15.10.2023 23:59:38 +03:00'
   }),  { enabled: false });
 
   return <button onClick={() => {
