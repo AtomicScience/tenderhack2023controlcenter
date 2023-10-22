@@ -49,3 +49,20 @@ export const requestProdFall = async (params: { id: string, created_date: string
 
   return await result;
 }
+
+export const requestMailing = async ({ error_uid, ...params }: { 
+  recipients: string[],
+  title: string,
+  text: string,
+  error_uid: string
+}): Promise<unknown> => {
+  const result = request(SERVER + '/dashboard/errors/' + error_uid + '/mail', { 
+    method: "POST", 
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ...params })
+  });
+
+  return await result;
+}
