@@ -1,4 +1,4 @@
-import { Text, Pagination, Stack, Title, Skeleton, ActionIcon, Group, Indicator, Tooltip } from '@mantine/core';
+import { Text, Pagination, Stack, Title, ActionIcon, Group, Indicator, Tooltip } from '@mantine/core';
 import { ErrorCard } from './ErrorCard';
 import { requestErrors } from '../api';
 import { useQuery } from 'react-query';

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ErrorShortModel, ErrorShortModelSchema, ErrorsDTO } from './models/error';
+import { ErrorShortModel, ErrorShortModelSchema, ErrorStatus, ErrorsDTO } from './models/error';
 import { ErrorInstance, ErrorInstanceSchema } from './models/errorInstance';
 
 export const SERVER = "http://10.9.67.97:8000";
@@ -48,4 +48,32 @@ export const requestProdFall = async (params: { id: string, created_date: string
   });
 
   return await result;
+}
+
+export const setErrorStatus = (error_uid: string, status: ErrorStatus) => {
+  const params = new URLSearchParams({
+    status
+  });
+
+  return request(SERVER + `/dashboard/errors/${error_uid}/status?` + params, { 
+    method: "PUT"
+  });
+}
+
+export const requestErrorMessage = async (error_uid: string) => {
+  const result = request(SERVER + `/dashboard/errors/${error_uid}/notification`) as any;
+
+  return ((await result)['appear_text']) as string;
+}
+
+export const setErrorMessage = async (error_uid: string, message: string) => {
+  const result = request(SERVER + `/dashboard/errors/${error_uid}/notification`, { 
+    method: "PUT", 
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ appear_text: message })
+  });
+
+  return result;
 }

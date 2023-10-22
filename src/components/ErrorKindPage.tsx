@@ -4,15 +4,62 @@ import { IconChevronLeft } from '@tabler/icons-react';
 import { FANCY_STATUS_NAMES, StatusBadge } from './StatusBadge';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ErrorInstancesTable } from './ErrorInstancesTable';
-import { useQuery } from 'react-query';
-import { requestError } from '../api';
-import { ERROR_STATUSES } from '../models/error';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { requestError, requestErrorMessage, setErrorMessage, setErrorStatus } from '../api';
+import { ERROR_STATUSES, ErrorStatus } from '../models/error';
+import { notifications } from '@mantine/notifications';
+import { useRef } from 'react';
 
 export const ErrorKindPage = () => {
   const { errorId } = useParams();
   const navigate = useNavigate();
+  const messageRef = useRef<HTMLTextAreaElement>();
 
-  const { isLoading, data: error } = useQuery(["errors", errorId], () => requestError(errorId ?? ""));
+  const { isLoading, data: error } = useQuery(
+    ["errorKind", errorId], 
+    () => requestError(errorId ?? ""),
+    { keepPreviousData: true },
+  );
+
+  const {
+    data: message,
+  } = useQuery(["message", errorId], () => requestErrorMessage(errorId ?? ""), {
+    keepPreviousData: true,
+    onSuccess: (result) => {
+      if (!messageRef.current) return;
+      messageRef.current.value = result;
+    }
+  });
+
+  const client = useQueryClient();
+  const setStatus = useMutation({
+    mutationFn: (newStatus: ErrorStatus) => {
+      return setErrorStatus(errorId!, newStatus);
+    },
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ["errors"] });
+      client.invalidateQueries({ queryKey: ["errorKind"] });
+      notifications.show({
+        title: "Успех!",
+        message: "Статус успешно обновлен",
+        color: "green",
+      });
+    }
+  })
+
+  const setMessage = useMutation({
+    mutationFn: (message: string) => {
+      return setErrorMessage(errorId!, message);
+    },
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ["message"] });
+      notifications.show({
+        title: "Успех!",
+        message: "Сообщение успешно установлено",
+        color: "green",
+      });
+    },
+  });
   
   return (
     <Paper p="md">
@@ -64,7 +111,8 @@ export const ErrorKindPage = () => {
               value: status,
               label: FANCY_STATUS_NAMES[status],
             }))}
-            defaultValue={error?.category}
+            value={error?.status}
+            onChange={(val) => val && setStatus.mutate(val as ErrorStatus)}
             allowDeselect={false}
           />
         </Skeleton>
@@ -79,13 +127,19 @@ export const ErrorKindPage = () => {
               placeholder="Извините, что возникла ошибка. В ближайшее время все исправим и пришлем вам уведомление"
               withAsterisk
               autosize
+              ref={messageRef}
               minRows={3}
             />
           </Skeleton>
 
           <Skeleton visible={isLoading}>
             <Group gap="xs">
-              <Button radius="xs" color="main-blue.8">
+              <Button
+                radius="xs"
+                color="main-blue.8"
+                onClick={() =>
+                  setMessage.mutate(messageRef.current?.value!)}
+              >
                 Сохранить
               </Button>
             </Group>
@@ -135,7 +189,10 @@ export const ErrorKindPage = () => {
             Таблица экземпляров ошибок
           </Title>
 
-          <ErrorInstancesTable error_uid={errorId} totalErrors={error?.logs_count_total}/>
+          <ErrorInstancesTable
+            error_uid={errorId}
+            totalErrors={error?.logs_count_total}
+          />
         </Stack>
       </Stack>
     </Paper>
