@@ -1,7 +1,8 @@
-import { Anchor, Badge, Card, Group, Stack, Text } from '@mantine/core'
+import { Anchor, Card, Group, Stack, Text } from '@mantine/core'
 import { FC } from 'react';
 import { ErrorShortModel } from '../models/error';
 import { ErrorOccurenes } from './ErrorOccurenes';
+import { StatusBadge } from './StatusBadge';
 
 export type ErrorCardProps = ErrorShortModel;
 
@@ -22,9 +23,7 @@ export const ErrorCard: FC<ErrorCardProps> = ({
               {category}
             </Text>
           </Text>
-          <Badge variant="light" color="red">
-            {status}
-          </Badge>
+          <StatusBadge status={status}/>
         </Group>
         <Anchor size="lg" href={`errors/${error_uid}`} fw={600}>
           {title}

@@ -1,4 +1,3 @@
-import { notifications } from "@mantine/notifications"
 import { useQuery } from 'react-query'
 import { requestProdFall } from "../api";
 

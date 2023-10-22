@@ -1,6 +1,6 @@
 import { ThemeIcon, NavLink } from '@mantine/core';
 import { IconChevronRight, IconGraph, IconMessage } from '@tabler/icons-react';
-import { Link, useMatch, useNavigate } from 'react-router-dom';
+import { Link, useMatch } from 'react-router-dom';
 
 export const Navbar = () => {
   const isAnalyticsPage = useMatch('/')

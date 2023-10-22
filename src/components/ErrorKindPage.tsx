@@ -1,20 +1,22 @@
-import { Title, Paper, Flex, Stack, Badge, Textarea, Button, Group, Select } from '@mantine/core';
+import { Title, Paper, Flex, Stack, Textarea, Button, Group, Select, Anchor } from '@mantine/core';
 import { ErrorOccurenes } from './ErrorOccurenes';
 import { IconChevronLeft } from '@tabler/icons-react';
+import { StatusBadge } from './StatusBadge';
 
 export const ErrorKindPage = () => {
   return (
     <Paper p="md">
       <Stack gap="md">
         <Group align="flex-start">
-          <Button
-            color="black"
+          <Anchor
+            c="black"
             variant="transparent"
-            size="compact-sm"
-            leftSection={<IconChevronLeft size="1rem" />}
+            href="/errors"
+            underline="never"
           >
+            <IconChevronLeft size="1rem" className="inline" />
             Назад
-          </Button>
+          </Anchor>
         </Group>
 
         <Flex
@@ -28,16 +30,14 @@ export const ErrorKindPage = () => {
               Ошибка в форме создания характеристик
             </Title>
             <ErrorOccurenes
-              overallCount={1024}
+              logs_count_total={1024}
               date="11.12.2023"
-              lastDayCount={12}
-              threeDaysCount={24}
-              oneMonthCount={10}
+              logs_count_last_24h={12}
+              logs_count_last_3d={24}
+              logs_count_last_1mo={10}
             />
           </Stack>
-          <Badge variant="light" color="red">
-            Не разрешен
-          </Badge>
+          <StatusBadge status={'new'} />
         </Flex>
 
         <Select

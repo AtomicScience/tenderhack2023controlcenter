@@ -16,7 +16,7 @@ export const Frame = () => {
         <Group>
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
           <div className="flex align-center">
-            <img src="pp_logo.svg" />
+            <img src="/pp_logo.svg" />
           </div>
         </Group>
       </AppShell.Header>
