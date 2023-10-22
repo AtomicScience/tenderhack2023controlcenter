@@ -3,6 +3,7 @@ import { ErrorOccurenes } from './ErrorOccurenes';
 import { IconChevronLeft } from '@tabler/icons-react';
 import { FANCY_STATUS_NAMES, StatusBadge } from './StatusBadge';
 import { Link } from 'react-router-dom';
+import { ErrorInstancesTable } from './ErrorInstancesTable';
 
 export const ErrorKindPage = () => {
   return (
@@ -39,7 +40,7 @@ export const ErrorKindPage = () => {
               logs_count_last_1mo={10}
             />
           </Stack>
-          <StatusBadge status={'new'} />
+          <StatusBadge status={"new"} />
         </Flex>
 
         <Select
@@ -103,6 +104,12 @@ export const ErrorKindPage = () => {
               Сохранить черновик
             </Button>
           </Group>
+
+          <Title order={2} fw={600} className="!text-lg">
+            Уведомления
+          </Title>
+
+          <ErrorInstancesTable />
         </Stack>
       </Stack>
     </Paper>

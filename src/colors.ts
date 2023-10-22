@@ -65,6 +65,8 @@ const gray: MantineColorsTuple = [
   "#575757"
 ]
 
+export const black = "#1A1A1A";
+
 export const colors =  {
   'main-blue': mainBlue,
   'gray-blue': grayBlue,
