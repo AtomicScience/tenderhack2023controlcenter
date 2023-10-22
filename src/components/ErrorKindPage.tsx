@@ -23,10 +23,7 @@ const FANCY_GROUPES_NAMES = {
 
 const mailingList = {
   [MailingGroups.ALL]: [
-    'goncharkv@gmail.com',
-    'romka_s@inbox.ru',
-    'a.kostenko32@gmail.com',
-    'shnobel-@mail.ru'
+
   ],
   [MailingGroups.ACTIVE]: [
     'blinov.egor2011@yandex.ru'
