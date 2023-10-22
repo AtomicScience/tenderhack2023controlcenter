@@ -5,6 +5,8 @@ import { Link, useMatch } from 'react-router-dom';
 export const Navbar = () => {
   const isAnalyticsPage = useMatch('/')
   const isErrorsPage = useMatch('/errors')
+  const isErrorKindPage = useMatch('/errors/:errorId')
+  const isErrorPage = isErrorsPage || isErrorKindPage
   
   return (
     <>
@@ -24,7 +26,7 @@ export const Navbar = () => {
       <Link to="/errors">
         <NavLink
           component='span'
-          active={!!isErrorsPage}
+          active={!!isErrorPage}
           label="Ошибки"
           leftSection={
             <ThemeIcon variant="light" size="md" color="red">

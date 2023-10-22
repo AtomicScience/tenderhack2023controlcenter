@@ -14,17 +14,13 @@ export const requestErrors = async (): Promise<ErrorsDTO> => {
   return await result as ErrorsDTO;
 }
 
-export const requestProdFall = async (): Promise<unknown> => {
+export const requestProdFall = async (params: { id: string, created_date: string, description: string }): Promise<unknown> => {
   const result = request(SERVER + '/service', { 
     method: "POST", 
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      id: "test",
-      created_date: "2023-10-22T02:41:13.813Z",
-      description: "Something went wrong!"
-    })
+    body: JSON.stringify({ ...params })
   });
 
   return await result;

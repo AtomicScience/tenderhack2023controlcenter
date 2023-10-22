@@ -4,6 +4,7 @@ import { Frame } from "./components/Frame"
 import { DasboardPage } from "./components/DashboardPage"
 import { DemoPage } from "./components/DemoPage"
 import { ErrorKindPage } from "./components/ErrorKindPage"
+import { Exporter } from "./components/Exporter"
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="errors" element={<ErrorsPage />} />
       </Route>
       <Route path="demo" element={<DemoPage />} />
+      <Route path="exporter" element={<Exporter />} />
       <Route path="*" element={<p>404</p>} />
     </Routes>     
   )

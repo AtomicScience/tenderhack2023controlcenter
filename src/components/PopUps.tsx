@@ -14,7 +14,7 @@ export const PopUps = () => {
   //   }
   // }, [])
 
-  const { refetch } = useQuery("servicePush", requestProdFall,  { enabled: false });
+  const { refetch } = useQuery("servicePush", () => requestProdFall({id: 'test', created_date: "2023-10-22T04:50:09.421Z", description: 'Something went wrong'}),  { enabled: false });
 
   return <button onClick={() => refetch()}>Уронить прод</button>
 }

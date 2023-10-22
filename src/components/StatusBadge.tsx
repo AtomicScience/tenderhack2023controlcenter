@@ -5,7 +5,7 @@ export type StatusBadgeProps = {
   status: ErrorStatus
 }
 
-const FANCY_STATUS_NAMES = {
+export const FANCY_STATUS_NAMES = {
   'new': 'Новый',
   'in_progress': 'В процессе',
   'resolved': 'Разрешено',

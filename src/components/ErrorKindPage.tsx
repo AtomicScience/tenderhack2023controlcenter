@@ -1,7 +1,8 @@
 import { Title, Paper, Flex, Stack, Textarea, Button, Group, Select, Anchor } from '@mantine/core';
 import { ErrorOccurenes } from './ErrorOccurenes';
 import { IconChevronLeft } from '@tabler/icons-react';
-import { StatusBadge } from './StatusBadge';
+import { FANCY_STATUS_NAMES, StatusBadge } from './StatusBadge';
+import { Link } from 'react-router-dom';
 
 export const ErrorKindPage = () => {
   return (
@@ -9,9 +10,10 @@ export const ErrorKindPage = () => {
       <Stack gap="md">
         <Group align="flex-start">
           <Anchor
+            component={Link}
             c="black"
             variant="transparent"
-            href="/errors"
+            to="/errors"
             underline="never"
           >
             <IconChevronLeft size="1rem" className="inline" />
@@ -44,7 +46,7 @@ export const ErrorKindPage = () => {
           label="Статус ошибки"
           description="Укажите статус ошибки, который будет отображаться в карточке"
           placeholder="Выбрать"
-          data={["Новая", "В процессе", "Разрешена"]}
+          data={Object.values(FANCY_STATUS_NAMES)}
           allowDeselect={false}
         />
 
