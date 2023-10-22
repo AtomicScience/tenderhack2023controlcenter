@@ -9,7 +9,7 @@ export const ErrorKindPage = () => {
           <Title order={1} fw={600} className="!text-2xl">
             Ошибка в форме создания характеристик
           </Title>
-          <ErrorOccurenes />
+          {/* <ErrorOccurenes /> */}
         </Stack>
 
         <Space className="!flex-grow" />

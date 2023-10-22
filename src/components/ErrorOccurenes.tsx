@@ -1,25 +1,40 @@
 import { Group, Text } from '@mantine/core';
+import { FC } from 'react';
 
-export const ErrorOccurenes = () => {
+export interface ErrorOccurenesProps {
+  overallCount: number
+  date: string
+  lastDayCount: number
+  threeDaysCount: number
+  oneMonthCount: number
+}
+
+export const ErrorOccurenes: FC<ErrorOccurenesProps> = ({
+  overallCount,
+  date,
+  lastDayCount,
+  threeDaysCount,
+  oneMonthCount
+}) => {
   return (
     <>
       <Group justify="space-between">
         <Group gap="sm">
           <Text span fw={700} className="!text-4xl">
-            1024
+            {overallCount}
           </Text>
           <Text size="sm" fw={600}>
             Количество случаев
           </Text>
         </Group>
         <Text c="gray" size="sm" fw={600}>
-          21.11.2023
+          {date}
         </Text>
       </Group>
       <Group justify="space-between">
         <Group gap="xs">
           <Text span fw={700} size="xl" c="green">
-            0
+            {lastDayCount}
           </Text>
           <Text size="xs" fw={600}>
             За последние сутки
@@ -27,7 +42,7 @@ export const ErrorOccurenes = () => {
         </Group>
         <Group gap="xs">
           <Text span fw={700} size="xl">
-            12
+            {threeDaysCount}
           </Text>
           <Text size="xs" fw={600}>
             За 3 дня
@@ -35,7 +50,7 @@ export const ErrorOccurenes = () => {
         </Group>
         <Group gap="xs">
           <Text span fw={700} size="xl">
-            506
+            {oneMonthCount}
           </Text>
           <Text size="xs" fw={600}>
             За месяц
