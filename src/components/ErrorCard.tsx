@@ -1,19 +1,11 @@
-import { Anchor, Badge, Card, CardSection, Center, Group, Space, Stack, Text } from '@mantine/core'
-import { IconVersions } from '@tabler/icons-react';
+import { Anchor, Badge, Card, Group, Stack, Text } from '@mantine/core'
 import { FC } from 'react';
+import { ErrorShortModel } from '../models/error';
 
-interface IncidentsCardProps {
-  errorKind: string
-  errorType: string
-  status: string
-  overallCount: number
-  date: string
-  lastDayCount: number
-  threeDaysCount: number
-  oneMonthCount: number
-}
+export type ErrorCardProps = ErrorShortModel;
 
-export const IncidentCard: FC<IncidentsCardProps> = ({
+export const ErrorCard: FC<ErrorCardProps> = ({
+  errorId,
   errorKind,
   errorType,
   status,
@@ -37,7 +29,7 @@ export const IncidentCard: FC<IncidentsCardProps> = ({
             {status}
           </Badge>
         </Group>
-        <Anchor size="lg" fw={600}>
+        <Anchor size="lg" href={`errors/${errorId}`} fw={600}>
           {errorKind}
         </Anchor>
         <Group justify="space-between">

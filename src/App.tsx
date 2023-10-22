@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom"
-import { IncidentsPage } from "./components/IncidentsPage"
+import { ErrorsPage } from "./components/Errors"
 import { Frame } from "./components/Frame"
 import { DasboardPage } from "./components/DashboardPage"
 
@@ -8,7 +8,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Frame />}>
         <Route path="/" element={<DasboardPage />} />
-        <Route path="errors" element={<IncidentsPage />} />
+        <Route path="errors" element={<ErrorsPage />} />
       </Route>
       <Route path="*" element={<p>404</p>} />
     </Routes>     
