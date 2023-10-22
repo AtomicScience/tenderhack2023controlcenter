@@ -20,6 +20,7 @@ export const ErrorInstancesTable = ({
   totalErrors
 }: ErrorInstancesProps) => {
   const [page, setPage] = useState(1);
+  const [rows, setRows] = useState<any>([]);
 
   const { isLoading, data: errors } = useQuery(
     ["errorInstances", error_uid, page],
