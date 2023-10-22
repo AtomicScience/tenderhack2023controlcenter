@@ -1,4 +1,4 @@
-import { Flex, Stack, Title } from '@mantine/core';
+import { Stack, Title } from '@mantine/core';
 import { ErrorCard } from './ErrorCard';
 import { requestErrors } from '../api';
 import { useQuery } from 'react-query';
@@ -10,7 +10,7 @@ export const ErrorsPage = () => {
   useEffect(() => {
     const pollInterval = setInterval(() => refetch(), 10000)
     return () => clearInterval(pollInterval)
-  })
+  }, [])
 
   return (
     <Stack>
