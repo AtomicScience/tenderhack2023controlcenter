@@ -15,11 +15,16 @@ export const requestErrors = async (): Promise<ErrorsDTO> => {
 }
 
 export const requestProdFall = async (): Promise<unknown> => {
-  const result = request(SERVER + '/service', { method: "POST", body: JSON.stringify({
-    id: 'test',
-    created_date: "2023-10-22T02:41:13.813Z",
-    description: "Something went wrong!"
-  })
+  const result = request(SERVER + '/service', { 
+    method: "POST", 
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: "test",
+      created_date: "2023-10-22T02:41:13.813Z",
+      description: "Something went wrong!"
+    })
   });
 
   return await result;

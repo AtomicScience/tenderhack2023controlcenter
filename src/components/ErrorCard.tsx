@@ -2,6 +2,7 @@ import { Anchor, Badge, Card, Group, Stack, Text } from '@mantine/core'
 import { FC } from 'react';
 import { ErrorShortModel } from '../models/error';
 import { ErrorOccurenes } from './ErrorOccurenes';
+import { Link } from 'react-router-dom'
 
 export type ErrorCardProps = ErrorShortModel;
 
@@ -26,7 +27,7 @@ export const ErrorCard: FC<ErrorCardProps> = ({
             {status}
           </Badge>
         </Group>
-        <Anchor size="lg" href={`errors/${error_uid}`} fw={600}>
+        <Anchor component={Link} size="lg" to={`/errors/${error_uid}`} fw={600}>
           {title}
         </Anchor>
         <ErrorOccurenes {...errorOccurences} />
