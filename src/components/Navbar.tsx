@@ -1,5 +1,5 @@
 import { ThemeIcon, NavLink, Stack, Avatar, Group, Text} from '@mantine/core';
-import { IconChevronRight, IconGraph, IconMessage } from '@tabler/icons-react';
+import { IconChevronRight, IconGraph, IconMessage, IconSettings } from '@tabler/icons-react';
 import { Link, useMatch } from 'react-router-dom';
 
 export const Navbar = () => {
@@ -48,19 +48,18 @@ export const Navbar = () => {
         className="!border-t-gray-3 border-t"
       >
         <Avatar src={null} alt="Vitaly Rtishchev" color="red">
-          ИП
+          ИЩ
         </Avatar>
-        <Stack gap="1" className="!grow !basis-0">
-          {/* TODO: Make proper clamp */}
-          <Text size="xs" fw={600} className="whitespace-nowrap">
-            Ирина Пушк...
+        <Stack gap="1" w="1" className="!grow">
+          <Text size="xs" truncate="end" fw={600} className="whitespace-nowrap">
+            Ирина Щекочихина-Крестовоздвиженская
           </Text>
 
           <Text size="xs" c="gray" className="whitespace-nowrap">
             Менеджер
           </Text>
         </Stack>
-        <IconMessage height="2rem" width="2rem" />
+        <IconSettings height="1.5rem" width="1.5rem" className='!cursor-pointer'/>
       </Group>
     </Stack>
   );

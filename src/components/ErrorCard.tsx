@@ -32,6 +32,8 @@ export const ErrorCard: FC<ErrorCardProps> = ({
             size="lg"
             to={`/errors/${error_uid}`}
             fw={600}
+            truncate="end"
+            className='!overflow-hidden'
           >
             {title}
           </Anchor>

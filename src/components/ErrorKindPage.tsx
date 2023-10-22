@@ -9,7 +9,7 @@ export const ErrorKindPage = () => {
   return (
     <Paper p="md">
       <Stack gap="md">
-        <Group align="flex-start">
+        <Group align="flex-start" justify='space-between'>
           <Anchor
             component={Link}
             c="black"
@@ -20,6 +20,7 @@ export const ErrorKindPage = () => {
             <IconChevronLeft size="1rem" className="inline" />
             Назад
           </Anchor>
+          <StatusBadge status={"resolved"} />
         </Group>
 
         <Flex
@@ -40,7 +41,6 @@ export const ErrorKindPage = () => {
               logs_count_last_1mo={10}
             />
           </Stack>
-          <StatusBadge status={"new"} />
         </Flex>
 
         <Select
@@ -106,7 +106,7 @@ export const ErrorKindPage = () => {
           </Group>
 
           <Title order={2} fw={600} className="!text-lg">
-            Уведомления
+            Таблица экземпляров ошибок
           </Title>
 
           <ErrorInstancesTable />
