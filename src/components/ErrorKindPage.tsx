@@ -27,7 +27,13 @@ export const ErrorKindPage = () => {
             <Title order={1} fw={600} className="!text-2xl">
               Ошибка в форме создания характеристик
             </Title>
-            <ErrorOccurenes />
+            <ErrorOccurenes
+              overallCount={1024}
+              date="11.12.2023"
+              lastDayCount={12}
+              threeDaysCount={24}
+              oneMonthCount={10}
+            />
           </Stack>
           <Badge variant="light" color="red">
             Не разрешен
