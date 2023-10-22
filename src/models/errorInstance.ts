@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
 export const ErrorInstanceSchema = z.object({
-  error_uid: z.string(),
-  error_id: z.string(),
-  date: z.coerce.date(),
-  log: z.string(),
+  raw_log_uid: z.string(),
+  id: z.string(),
+  created_date: z.coerce.date(),
+  description: z.string(),
 });
 
 export type ErrorInstance = z.infer<typeof ErrorInstanceSchema>;

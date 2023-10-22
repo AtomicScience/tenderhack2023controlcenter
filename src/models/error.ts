@@ -17,5 +17,6 @@ export const ErrorShortModelSchema = z.object({
 export type ErrorShortModel = z.infer<typeof ErrorShortModelSchema>;
 export type ErrorStatus     = typeof ERROR_STATUSES[number];
 export interface ErrorsDTO {
-  errors: ErrorShortModel[]
+  errors: ErrorShortModel[],
+  count: number,
 }

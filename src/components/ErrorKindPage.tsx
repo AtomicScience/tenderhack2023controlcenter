@@ -2,7 +2,7 @@ import { Title, Paper, Flex, Stack, Textarea, Button, Group, Select, Skeleton } 
 import { ErrorOccurenes } from './ErrorOccurenes';
 import { IconChevronLeft } from '@tabler/icons-react';
 import { FANCY_STATUS_NAMES, StatusBadge } from './StatusBadge';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ErrorInstancesTable } from './ErrorInstancesTable';
 import { useQuery } from 'react-query';
 import { requestError } from '../api';
@@ -27,7 +27,7 @@ export const ErrorKindPage = () => {
             <IconChevronLeft size="1rem" className="inline" />
             Назад
           </Button>
-          <Skeleton visible={isLoading} display="inline">
+          <Skeleton visible={isLoading} display="inline" width="fit-content">
             <StatusBadge status={error?.status ?? "resolved"} />
           </Skeleton>
         </Group>
@@ -135,7 +135,7 @@ export const ErrorKindPage = () => {
             Таблица экземпляров ошибок
           </Title>
 
-          <ErrorInstancesTable />
+          <ErrorInstancesTable error_uid={errorId} totalErrors={error?.logs_count_total}/>
         </Stack>
       </Stack>
     </Paper>
