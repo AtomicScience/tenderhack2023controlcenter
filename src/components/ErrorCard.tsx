@@ -16,7 +16,7 @@ export const ErrorCard: FC<ErrorCardProps> = ({
 }) => {
   return (
     <Card bg="white">
-      <Stack gap="sm" justify='space-between'>
+      <Stack gap="sm" h="100%" justify='space-between'>
         <Stack gap="sm">
           <Group justify="space-between">
             <Text size="sm">

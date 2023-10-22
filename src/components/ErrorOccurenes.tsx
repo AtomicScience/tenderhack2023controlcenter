@@ -1,4 +1,4 @@
-import { Group, Text } from '@mantine/core';
+import { Group, Stack, Text } from '@mantine/core';
 import { FC } from 'react';
 
 export interface ErrorOccurenesProps {
@@ -17,7 +17,7 @@ export const ErrorOccurenes: FC<ErrorOccurenesProps> = ({
   logs_count_last_1mo
 }) => {
   return (
-    <>
+    <Stack gap='sm'>
       <Group justify="space-between">
         <Group gap="sm">
           <Text span fw={700} className="!text-4xl">
@@ -57,6 +57,6 @@ export const ErrorOccurenes: FC<ErrorOccurenesProps> = ({
           </Text>
         </Group>
       </Group>
-    </>
+    </Stack>
   );
 }
