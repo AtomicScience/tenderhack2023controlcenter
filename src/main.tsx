@@ -22,9 +22,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <MantineProvider theme={MANTINE_THEME}>
         <Notifications />
-        <reatomContext.Provider value={ctx}>
-          <QueryClientProvider client={queryClient}>
-            <App />
+          <reatomContext.Provider value={ctx}>
+            <QueryClientProvider client={queryClient}>
+              <App />
           </QueryClientProvider>
         </reatomContext.Provider>
       </MantineProvider>

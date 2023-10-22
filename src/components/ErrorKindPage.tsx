@@ -2,6 +2,8 @@ import { Title, Paper, Flex, Stack, Textarea, Button, Group, Select, Anchor } fr
 import { ErrorOccurenes } from './ErrorOccurenes';
 import { IconChevronLeft } from '@tabler/icons-react';
 import { StatusBadge } from './StatusBadge';
+import { Link } from 'react-router-dom';
+import { ErrorInstancesTable } from './ErrorInstancesTable';
 
 export const ErrorKindPage = () => {
   return (
@@ -11,7 +13,8 @@ export const ErrorKindPage = () => {
           <Anchor
             c="black"
             variant="transparent"
-            href="/errors"
+            component={Link}
+            to="/errors"
             underline="never"
           >
             <IconChevronLeft size="1rem" className="inline" />
@@ -37,7 +40,7 @@ export const ErrorKindPage = () => {
               logs_count_last_1mo={10}
             />
           </Stack>
-          <StatusBadge status={'new'} />
+          <StatusBadge status={"new"} />
         </Flex>
 
         <Select
@@ -101,6 +104,12 @@ export const ErrorKindPage = () => {
               Сохранить черновик
             </Button>
           </Group>
+
+          <Title order={2} fw={600} className="!text-lg">
+            Уведомления
+          </Title>
+
+          <ErrorInstancesTable />
         </Stack>
       </Stack>
     </Paper>

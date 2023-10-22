@@ -1,9 +1,9 @@
 import { MantineThemeOverride } from '@mantine/core';
-import { colors } from './colors';
+import { black, colors } from './colors';
 
 export const MANTINE_THEME: MantineThemeOverride = {
   primaryColor: 'main-blue',
   colors,
-  black: "#1A1A1A",
+  black,
   fontFamily: 'Open Sans',
 }

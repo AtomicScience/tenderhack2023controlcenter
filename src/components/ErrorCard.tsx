@@ -15,20 +15,27 @@ export const ErrorCard: FC<ErrorCardProps> = ({
   ...errorOccurences
 }) => {
   return (
-    <Card bg="white" className='!flex-grow'>
-      <Stack gap="sm">
-        <Group justify="space-between">
-          <Text size="sm">
-            Тип ошибки:{" "}
-            <Text span fw={500}>
-              {category}
+    <Card bg="white">
+      <Stack gap="sm" justify='space-between'>
+        <Stack gap="sm">
+          <Group justify="space-between">
+            <Text size="sm">
+              Тип ошибки:{" "}
+              <Text span fw={500}>
+                {category}
+              </Text>
             </Text>
-          </Text>
-          <StatusBadge status={status}/>
-        </Group>
-        <Anchor component={Link} size="lg" to={`/errors/${error_uid}`} fw={600}>
-          {title}
-        </Anchor>
+            <StatusBadge status={status} />
+          </Group>
+          <Anchor
+            component={Link}
+            size="lg"
+            to={`/errors/${error_uid}`}
+            fw={600}
+          >
+            {title}
+          </Anchor>
+        </Stack>
         <ErrorOccurenes {...errorOccurences} />
       </Stack>
     </Card>
