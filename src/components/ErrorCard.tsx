@@ -6,9 +6,9 @@ import { ErrorOccurenes } from './ErrorOccurenes';
 export type ErrorCardProps = ErrorShortModel;
 
 export const ErrorCard: FC<ErrorCardProps> = ({
-  errorId,
-  errorKind,
-  errorType,
+  error_uid,
+  title,
+  category,
   status,
   ...errorOccurences
 }) => {
@@ -19,15 +19,15 @@ export const ErrorCard: FC<ErrorCardProps> = ({
           <Text size="sm">
             Тип ошибки:{" "}
             <Text span fw={500}>
-              {errorType}
+              {category}
             </Text>
           </Text>
           <Badge variant="light" color="red">
             {status}
           </Badge>
         </Group>
-        <Anchor size="lg" href={`errors/${errorId}`} fw={600}>
-          {errorKind}
+        <Anchor size="lg" href={`errors/${error_uid}`} fw={600}>
+          {title}
         </Anchor>
         <ErrorOccurenes {...errorOccurences} />
       </Stack>

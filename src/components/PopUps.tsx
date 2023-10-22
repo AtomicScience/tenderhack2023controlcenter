@@ -1,5 +1,6 @@
 import { notifications } from "@mantine/notifications"
-import { useEffect } from "react"
+import { useQuery } from 'react-query'
+import { requestProdFall } from "../api";
 
 export const PopUps = () => {
   // useEffect(() => {
@@ -14,5 +15,7 @@ export const PopUps = () => {
   //   }
   // }, [])
 
-  return null
+  const { refetch } = useQuery("servicePush", requestProdFall,  { enabled: false });
+
+  return <button onClick={() => refetch()}>Уронить прод</button>
 }

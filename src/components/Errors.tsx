@@ -6,25 +6,21 @@ import { useQuery } from 'react-query';
 export const ErrorsPage = () => {
   const { isLoading, isError, data, error } = useQuery("errors", requestErrors);
 
-  console.log(isLoading, isError, data, error);
-
   return (
     <Stack>
       <Title order={1} size="xl" fw={700}>
         Список ошибок
       </Title>
       <Flex gap="sm" wrap='wrap'>
-        <ErrorCard 
-          errorId='1'
-          errorKind='Ошибка: Сфетофор горит красным'
-          errorType='Системная'
-          status='Не разрешен'
-          overallCount={1024}
-          date='12.01.2023'
-          lastDayCount={12}
-          threeDaysCount={13}
-          oneMonthCount={123}
-        />
+        {
+          data?.errors?.map(({ error_uid, ...props }) => 
+            <ErrorCard
+              key={error_uid}
+              error_uid={error_uid}
+              {...props}
+            />
+          )
+        }
       </Flex>
     </Stack>
   );

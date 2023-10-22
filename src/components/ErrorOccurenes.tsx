@@ -2,39 +2,39 @@ import { Group, Text } from '@mantine/core';
 import { FC } from 'react';
 
 export interface ErrorOccurenesProps {
-  overallCount: number
-  date: string
-  lastDayCount: number
-  threeDaysCount: number
-  oneMonthCount: number
+  date: string,
+  logs_count_total: number,
+  logs_count_last_24h: number,
+  logs_count_last_3d: number,
+  logs_count_last_1mo: number,
 }
 
 export const ErrorOccurenes: FC<ErrorOccurenesProps> = ({
-  overallCount,
+  logs_count_total,
   date,
-  lastDayCount,
-  threeDaysCount,
-  oneMonthCount
+  logs_count_last_24h,
+  logs_count_last_3d,
+  logs_count_last_1mo
 }) => {
   return (
     <>
       <Group justify="space-between">
         <Group gap="sm">
           <Text span fw={700} className="!text-4xl">
-            {overallCount}
+            {logs_count_total}
           </Text>
           <Text size="sm" fw={600}>
             Количество случаев
           </Text>
         </Group>
         <Text c="gray" size="sm" fw={600}>
-          {date}
+          {new Date(date).toLocaleString('ru-RU')}
         </Text>
       </Group>
       <Group justify="space-between">
         <Group gap="xs">
           <Text span fw={700} size="xl" c="green">
-            {lastDayCount}
+            {logs_count_last_24h}
           </Text>
           <Text size="xs" fw={600}>
             За последние сутки
@@ -42,7 +42,7 @@ export const ErrorOccurenes: FC<ErrorOccurenesProps> = ({
         </Group>
         <Group gap="xs">
           <Text span fw={700} size="xl">
-            {threeDaysCount}
+            {logs_count_last_3d}
           </Text>
           <Text size="xs" fw={600}>
             За 3 дня
@@ -50,7 +50,7 @@ export const ErrorOccurenes: FC<ErrorOccurenesProps> = ({
         </Group>
         <Group gap="xs">
           <Text span fw={700} size="xl">
-            {oneMonthCount}
+            {logs_count_last_1mo}
           </Text>
           <Text size="xs" fw={600}>
             За месяц
