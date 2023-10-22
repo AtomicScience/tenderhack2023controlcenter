@@ -4,17 +4,35 @@ import { IconChevronLeft } from '@tabler/icons-react';
 import { FANCY_STATUS_NAMES, StatusBadge } from './StatusBadge';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ErrorInstancesTable } from './ErrorInstancesTable';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { requestError, requestErrorMessage, setErrorMessage, setErrorStatus } from '../api';
 import { ERROR_STATUSES, ErrorStatus } from '../models/error';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useState, useRef } from 'react'
 import { notifications } from '@mantine/notifications';
-import { useRef } from 'react';
+import { requestError, requestErrorMessage, setErrorMessage, setErrorStatus, requestMailing } from '../api';
+
+const FANCY_GROUPES_NAMES = [
+  'Все пользователи', 
+  'Активные пользователи', 
+  'Потенциально затронутые пользователи', 
+  'Точно затронутые пользователи'
+]
+
+const mailingList = ['blinov.egor2011@yandex.ru']
+const mailingTitle = 'Портал Поставщиков - Сбой разрешен'
 
 export const ErrorKindPage = () => {
   const { errorId } = useParams();
   const navigate = useNavigate();
   const messageRef = useRef<HTMLTextAreaElement>();
 
+  const [mailingForm, setMailingForm] = useState<{ chosenMailingUsers: string, mailingText: string }>({
+    mailingText: "Ошибка с которой вы столкнулись исправлена",
+    chosenMailingUsers: FANCY_GROUPES_NAMES[0]
+  });
+
+  const handleMailing = () => {
+    requestMailing({ error_uid: errorId || '', title: mailingTitle, recipients: mailingList, text: mailingForm.mailingText })
+  }
   const { isLoading, data: error } = useQuery(
     ["errorKind", errorId], 
     () => requestError(errorId ?? ""),
@@ -116,8 +134,6 @@ export const ErrorKindPage = () => {
             allowDeselect={false}
           />
         </Skeleton>
-        {/* TODO: Select action */}
-
         <Stack gap="xs">
           <Skeleton visible={isLoading}>
             <Textarea
@@ -151,39 +167,46 @@ export const ErrorKindPage = () => {
         </Title>
 
         <Stack gap="xs">
-          <Skeleton visible={isLoading}>
-            <Select
-              label="Категория пользователей"
-              placeholder="Выбрать"
-              data={[
-                "Все пользователи",
-                "Активные пользователи",
-                "Потенциально затронутые пользователи",
-                "Затронутые пользователи",
-              ]}
-              allowDeselect={false}
-            />
-          </Skeleton>
+          <form onSubmit={(event) => {
+            event.preventDefault()
+            notifications.show({ title: 'Рассылка отправлена', message: 'Все!', color: 'green' })
+            handleMailing()
+          }}>
+            <Stack gap="xs">
+              <Skeleton visible={isLoading}>
+                <Select
+                  value={mailingForm.chosenMailingUsers}
+                  onChange={(chosen) => setMailingForm({ ...mailingForm, chosenMailingUsers: chosen || FANCY_GROUPES_NAMES[0] })}
+                  label="Категория пользователей"
+                  placeholder="Выбрать"
+                  data={FANCY_GROUPES_NAMES}
+                  allowDeselect={false}
+                />
+              </Skeleton>
 
-          <Skeleton visible={isLoading}>
-            <Textarea
-              variant="filled"
-              label="Введите текст при появлении ошибки у пользователя"
-              description="Данный текст будет появляться при возникновении ошибки на стороне пользователя"
-              placeholder="Извините, что возникла ошибка. В ближайшее время все исправим и пришлем вам уведомление"
-              withAsterisk
-              autosize
-              minRows={3}
-            />
-          </Skeleton>
+              <Skeleton visible={isLoading}>
+                <Textarea
+                  value={mailingForm.mailingText}
+                  onChange={(event) => setMailingForm({ ...mailingForm, mailingText: event.target.value })}
+                  variant="filled"
+                  label="Введите текст при появлении ошибки у пользователя"
+                  description="Данный текст будет появляться при возникновении ошибки на стороне пользователя"
+                  placeholder="Ошибка с которой вы столкнулись исправлена"
+                  withAsterisk
+                  autosize
+                  minRows={3}
+                />
+              </Skeleton>
 
-          <Skeleton visible={isLoading}>
-            <Group gap="xs">
-              <Button radius="xs" color="main-blue.8">
-                Отправить сообщение
-              </Button>
-            </Group>
-          </Skeleton>
+              <Skeleton visible={isLoading}>
+                <Group gap="xs">
+                  <Button radius="xs" color="main-blue.8" type="submit">
+                    Отправить сообщение
+                  </Button>
+                </Group>
+              </Skeleton>
+            </Stack>
+          </form>
 
           <Title order={2} fw={600} className="!text-lg">
             Таблица экземпляров ошибок

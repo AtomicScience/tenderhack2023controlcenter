@@ -1,5 +1,3 @@
-import { Flex, Stack, Title } from '@mantine/core';
-
 export const DasboardPage = () => {
     return (
       <iframe
